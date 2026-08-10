@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Comercial - Sua Cidade</title>
+    <!-- Ícones e Fontes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --success: #22c55e;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        /* Header / Hero */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 3rem 1rem 4rem;
+            text-align: center;
+        }
+
+        .header-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        header h1 {
+            font-size: 2.25rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        /* Barra de Pesquisa */
+        .search-box {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            outline: none;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        /* Container Principal */
+        .container {
+            max-width: 1200px;
+            margin: -2rem auto 3rem;
+            padding: 0 1rem;
+        }
+
+        /* Filtros de Categoria */
+        .categories {
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            scrollbar-width: none;
+        }
+
+        .categories::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.25rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            white-space: nowrap;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .cat-btn.active, .cat-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Grade de Empresas */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -3px rgba(0,0,0,0.1);
+        }
+
+        /* Imagem do Anúncio */
+        .card-img-container {
+            width: 100%;
+            height: 160px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img-container img {
+            transform: scale(1.05);
+        }
+
+        .card-header {
+            padding: 1.25rem 1.25rem 0.5rem;
+        }
+
+        .card-category {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .card-body {
+            padding: 0.75rem 1.25rem 1.25rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .info-item i {
+            margin-top: 0.25rem;
+            color: var(--primary);
+        }
+
+        .card-footer {
+            padding: 1rem 1.25rem;
+            background: #f8fafc;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.7rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-whatsapp {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #16a34a;
+        }
+
+        .btn-call {
+            background-color: #e2e8f0;
+            color: var(--text-main);
+        }
+
+        .btn-call:hover {
+            background-color: #cbd5e1;
+        }
+
+        /* Call to Action para Anunciantes */
+        .cta-banner {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .cta-banner h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-banner p {
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .cta-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .cta-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 640px) {
+            header h1 {
+                font-size: 1.75rem;
+            }
+            header {
+                padding: 2rem 1rem 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <h1>Guia Comercial da Cidade</h1>
+            <p>Encontre os melhores comércios, serviços e profissionais locais em um só lugar.</p>
+            
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="O que você está procurando? (Ex: Padaria, Eletricista...)">
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <div class="container">
+        
+        <!-- Filtros -->
+        <div class="categories" id="categoryFilters">
+            <button class="cat-btn active" data-category="todos">Todos</button>
+            <button class="cat-btn" data-category="Alimentação">Alimentação</button>
+            <button class="cat-btn" data-category="Saúde">Saúde</button>
+            <button class="cat-btn" data-category="Serviços">Serviços</button>
+            <button class="cat-btn" data-category="Automotivo">Automotivo</button>
+            <button class="cat-btn" data-category="Moda">Moda</button>
+        </div>
+
+        <!-- Lista de Empresas -->
+        <div class="grid" id="companiesGrid">
+            
+            <!-- Empresa 1 -->
+            <div class="card" data-category="Alimentação" data-name="padaria pão quente delicia">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" alt="Panificadora Pão Quente">
+                </div>
+                <div class="card-header">
+                    <span class="card-category">Alimentação</span>
+                    <h3 class="card-title">Panificadora Pão Quente</h3>
+                </div>
+                <div class="card-body">
+                    <div class="info-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Rua das Flores, 123 - Centro</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-clock"></i>
+                        <span>Seg a Sáb: 06h às 20h</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="tel:55999999999" class="btn btn-call"><i class="fa-solid fa-phone"></i> Ligar</a>
+                    <a href="https://wa.me/55999999999?text=Olá,%20vi%20seu%20anúncio%20no%20Guia%20Comercial." target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                </div>
+            </div>
+
+            <!-- Empresa 2 -->
+            <div class="card" data-category="Serviços" data-name="joao eletricista reparos manutencao">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80" alt="João Eletricista">
+                </div>
+                <div class="card-header">
+                    <span class="card-category">Serviços</span>
+                    <h3 class="card-title">João Eletricista</h3>
+                </div>
+                <div class="card-body">
+                    <div class="info-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Atendimento Residencial e Comercial</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-clock"></i>
+                        <span>Emergências 24h</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="tel:55999999999" class="btn btn-call"><i class="fa-solid fa-phone"></i> Ligar</a>
+                    <a href="https://wa.me/55999999999?text=Olá,%20preciso%20de%20um%20orçamento%20elétrico." target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                </div>
+            </div>
+
+            <!-- Empresa 3 -->
+            <div class="card" data-category="Automotivo" data-name="mecanica alta performance carros">
+                <div class="card-img-container">
+                    <img src="https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=600&q=80" alt="Mecânica Alta Performance">
+                </div>
+                <div class="card-header">
+                    <span class="card-category">Automotivo</span>
+                    <h3 class="card-title">Mecânica Alta Performance</h3>
+                </div>
+                <div class="card-body">
+                    <div class="info-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Av. Principal, 1500 - Industrial</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-clock"></i>
+                        <span>Seg a Sex: 08h às 18h</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="tel:55999999999" class="btn btn-call"><i class="fa-solid fa-phone"></i> Ligar</a>
+                    <a href="https://wa.me/55999999999?text=Olá,%20gostaria%20de%20agendar%20uma%20revisão." target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Banner para prospectar clientes locais -->
+        <div class="cta-banner">
+            <h2>Tem um negócio na cidade?</h2>
+            <p>Cadastre sua empresa no guia comercial e seja encontrado por milhares de moradores todos os dias.</p>
+            <a href="https://wa.me/SEUNUMEROAQUI?text=Olá,%20quero%20anunciar%20minha%20empresa%20no%20Guia%20Comercial!" target="_blank" class="cta-btn">Anunciar Minha Empresa</a>
+        </div>
+
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2026 Guia Comercial. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Script de Filtro e Pesquisa -->
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const categoryButtons = document.querySelectorAll('.cat-btn');
+        const cards = document.querySelectorAll('.card');
+
+        let activeCategory = 'todos';
+
+        // Função de Filtro
+        function filterCards() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+
+            cards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                const name = card.getAttribute('data-name');
+                const titleText = card.querySelector('.card-title').textContent.toLowerCase();
+
+                const matchesCategory = (activeCategory === 'todos' || category === activeCategory);
+                const matchesSearch = (name.includes(searchTerm) || titleText.includes(searchTerm));
+
+                if (matchesCategory && matchesSearch) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Evento de busca por texto
+        searchInput.addEventListener('input', filterCards);
+
+        // Evento de clique nas categorias
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                activeCategory = button.getAttribute('data-category');
+                filterCards();
+            });
+        });
+    </script>
+</body>
+</html>
