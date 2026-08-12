@@ -7,16 +7,16 @@
     "address": "Av. Euclides da Cunha, 130 - Jardim São Jorge",
     "phone": "5544997326752",
     "whatsapp": "5544997326752",
-    "whatsappText": "Olá, vi o anúncio do seu comércio no *Encontra Paranavaí.*",
-    "website": "https://www.panificadoramarinho.com.br",
+    "whatsappText": "Olá, vi o anúncio do sua panificadora no site/aplicativo *Encontra Paranavaí*...",
+    "website": null,
     "schedule": {
-      "1": { "open": "06:00", "close": "18:00" },
-      "2": { "open": "06:00", "close": "18:00" },
-      "3": { "open": "06:00", "close": "18:00" },
-      "4": { "open": "06:00", "close": "18:00" },
-      "5": { "open": "06:00", "close": "18:00" },
-      "6": { "open": "06:00", "close": "18:00" },
-      "7": { "open": "06:00", "close": "12:00" }
+      "1": { "open": "06:15", "close": "19:00" },
+      "2": { "open": "06:15", "close": "19:00" },
+      "3": { "open": "06:15", "close": "19:00" },
+      "4": { "open": "06:15", "close": "19:00" },
+      "5": { "open": "06:15", "close": "19:00" },
+      "6": { "open": "06:15", "close": "19:00" },
+      "7": { "open": "06:15", "close": "12:00" }
     }
   },
   {
