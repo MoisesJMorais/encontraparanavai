@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>Encontra Paranavaí - O Seu Guia Comercial Completo</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --bg-color: #DBDBDB;
+            --card-bg: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 3rem 1rem 5rem;
+            text-align: center;
+        }
+
+        .header-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        header h1 {
+            font-size: 2.25rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            outline: none;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: -3.5rem auto 3rem;
+            padding: 0 1rem;
+        }
+
+        .categories {
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            scrollbar-width: none;
+        }
+
+        .categories::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.25rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            white-space: nowrap;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .cat-btn.active, .cat-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -3px rgba(0,0,0,0.1);
+        }
+
+        .card-img-container {
+            width: 100%;
+            height: 160px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img-container img {
+            transform: scale(1.05);
+        }
+
+        .card-header {
+            padding: 1.25rem 1.25rem 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .card-category {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 50px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .status-badge.open {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .status-badge.closed {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .card-body {
+            padding: 0.75rem 1.25rem 1.25rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .info-item i {
+            margin-top: 0.25rem;
+            color: var(--primary);
+        }
+
+        .card-footer {
+            padding: 1rem 1.25rem;
+            background: #f8fafc;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 80px;
+            padding: 0.7rem 0.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-whatsapp {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #16a34a;
+        }
+
+        .btn-call {
+            background-color: #eab308;
+            color: #ffffff;
+        }
+
+        .btn-call:hover {
+            background-color: #ca8a04;
+        }
+
+        .btn-website {
+            background-color: #475569;
+            color: #ffffff;
+        }
+
+        .btn-website:hover {
+            background-color: #334155;
+        }
+
+        .cta-banner {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .cta-banner h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-banner p {
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .cta-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .cta-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 640px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            header {
+                padding: 2rem 1rem 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1>Encontra Paranavaí</h1>
+            <p>Encontre os melhores comércios, serviços e profissionais locais em um só lugar.</p>
+            
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="O que você está procurando?">
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="categories" id="categoryFilters">
+            <button class="cat-btn active" data-category="todos">Todos</button>
+            <button class="cat-btn" data-category="Panificadora">Panificadora</button>
+            <button class="cat-btn" data-category="Saúde">Saúde</button>
+            <button class="cat-btn" data-category="Serviços">Serviços</button>
+            <button class="cat-btn" data-category="Automotivo">Automotivo</button>
+            <button class="cat-btn" data-category="Moda">Moda</button>
+        </div>
+
+        <div class="grid" id="companiesGrid"></div>
+
+        <div class="cta-banner">
+            <h2>Você tem um negócio na cidade?</h2>
+            <p>Cadastre sua empresa ou serviço no nosso guia e seja encontrado por milhares de moradores da cidade todos os dias.</p>
+            <a href="https://wa.me/5544997326752?text=Olá,%20quero%20anunciar%20minha%20empresa%20no%20guia%20comercial%20Encontra%20Paranavaí!%20Como%20funciona?" target="_blank" class="cta-btn">Quero Anunciar Minha Empresa</a>
+        </div>
+
+    </div>
+
+    <script>
+        let allCompanies = [];
+        let filteredCompanies = [];
+        let itemsPerPage = 12;
+        let currentPage = 1;
+
+        const searchInput = document.getElementById('searchInput');
+        const categoryButtons = document.querySelectorAll('.cat-btn');
+        const companiesGrid = document.getElementById('companiesGrid');
+
+        let activeCategory = 'todos';
+        let searchTimeout = null;
+
+        function checkBusinessStatus(schedule) {
+            if (!schedule) return { text: 'Horário sob consulta', isOpen: false };
+
+            const now = new Date();
+            let currentDay = now.getDay();
+            currentDay = currentDay === 0 ? 7 : currentDay;
+
+            const todaySchedule = schedule[currentDay];
+
+            if (!todaySchedule || !todaySchedule.open || !todaySchedule.close) {
+                return { text: 'Fechado hoje', isOpen: false };
+            }
+
+            const currentTime = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+            if (currentTime >= todaySchedule.open && currentTime <= todaySchedule.close) {
+                return { text: `Aberto • Fecha às ${todaySchedule.close}`, isOpen: true };
+            } else {
+                return { text: `Fechado • Abre às ${todaySchedule.open}`, isOpen: false };
+            }
+        }
+
+        function renderCompanies(companies, append = false) {
+            if (!append) {
+                companiesGrid.innerHTML = '';
+            }
+
+            const existingBtn = document.getElementById('loadMoreBtn');
+            if (existingBtn) existingBtn.remove();
+
+            if (companies.length === 0 && !append) {
+                companiesGrid.innerHTML = '<div class="no-results">Nenhum estabelecimento encontrado.</div>';
+                return;
+            }
+
+            const startIndex = 0;
+            const endIndex = currentPage * itemsPerPage;
+            const paginatedItems = companies.slice(startIndex, endIndex);
+
+            paginatedItems.forEach(company => {
+                const status = checkBusinessStatus(company.schedule);
+                const badgeClass = status.isOpen ? 'open' : 'closed';
+
+                const websiteButton = company.website ? `
+                    <a href="${company.website}" target="_blank" class="btn btn-website" title="Visitar Site">
+                        <i class="fa-solid fa-globe"></i> Site
+                    </a>
+                ` : '';
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.setAttribute('data-category', company.category);
+
+                card.innerHTML = `
+                    <div class="card-img-container">
+                        <img src="${company.image}" alt="${company.name}" loading="lazy">
+                    </div>
+                    <div class="card-header">
+                        <div>
+                            <span class="card-category">${company.category}</span>
+                            <h3 class="card-title">${company.name}</h3>
+                        </div>
+                        <span class="status-badge ${badgeClass}">${status.text}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>${company.address}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>Tel / Contato direto</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="tel:${company.phone}" class="btn btn-call"><i class="fa-solid fa-phone"></i> Ligar</a>
+                        <a href="https://wa.me/${company.whatsapp}?text=${encodeURIComponent(company.whatsappText)}" target="_blank" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                        ${websiteButton}
+                    </div>
+                `;
+
+                companiesGrid.appendChild(card);
+            });
+
+            if (endIndex < companies.length) {
+                const loadMoreContainer = document.createElement('div');
+                loadMoreContainer.style.gridColumn = '1 / -1';
+                loadMoreContainer.style.textAlign = 'center';
+                loadMoreContainer.style.marginTop = '1.5rem';
+                loadMoreContainer.id = 'loadMoreBtn';
+
+                loadMoreContainer.innerHTML = `
+                    <button onclick="loadMore()" style="background: var(--primary); color: white; border: none; padding: 0.75rem 2rem; border-radius: 50px; font-weight: 600; cursor: pointer; font-size: 1rem;">
+                        Carregar Mais Empresas
+                    </button>
+                `;
+                companiesGrid.after(loadMoreContainer);
+            }
+        }
+
+        function loadMore() {
+            currentPage++;
+            renderCompanies(filteredCompanies, true);
+        }
+
+        function filterData() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            currentPage = 1;
+
+            filteredCompanies = allCompanies.filter(company => {
+                const matchesCategory = (activeCategory === 'todos' || company.category.toLowerCase() === activeCategory.toLowerCase());
+                const matchesSearch = company.name.toLowerCase().includes(searchTerm) || 
+                                      company.category.toLowerCase().includes(searchTerm) || 
+                                      company.address.toLowerCase().includes(searchTerm);
+
+                return matchesCategory && matchesSearch;
+            });
+
+            renderCompanies(filteredCompanies);
+        }
+
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(filterData, 300);
+        });
+
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                activeCategory = button.getAttribute('data-category');
+                filterData();
+            });
+        });
+
+        async function loadCompanies() {
+            try {
+                const response = await fetch('database/empresas.json');
+                if (!response.ok) throw new Error('Erro ao carregar os dados.');
+                allCompanies = await response.json();
+                filteredCompanies = allCompanies;
+                renderCompanies(filteredCompanies);
+            } catch (error) {
+                console.error('Erro:', error);
+                companiesGrid.innerHTML = '<div class="no-results">Erro ao carregar a base de dados dos anunciantes.</div>';
+            }
+        }
+
+        loadCompanies();
+    </script>
+</body>
+</html>
