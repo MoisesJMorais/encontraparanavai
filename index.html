@@ -291,41 +291,6 @@
             background-color: #334155;
         }
 
-        .cta-banner {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            color: white;
-            border-radius: var(--radius);
-            padding: 2.5rem 2rem;
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        .cta-banner h2 {
-            font-size: 1.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .cta-banner p {
-            color: #94a3b8;
-            max-width: 600px;
-            margin: 0 auto 1.5rem;
-        }
-
-        .cta-btn {
-            background: var(--primary);
-            color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
-            transition: background 0.2s;
-        }
-
-        .cta-btn:hover {
-            background: var(--primary-dark);
-        }
-
         .no-results {
             grid-column: 1 / -1;
             text-align: center;
@@ -370,15 +335,11 @@
         </div>
 
         <div class="grid" id="companiesGrid"></div>
-
-        <div class="cta-banner">
-            <h2>Você tem um negócio na cidade?</h2>
-            <p>Cadastre sua empresa ou serviço no nosso guia e seja encontrado por milhares de moradores da cidade todos os dias.</p>
-            <a href="https://wa.me/5544997326752?text=Olá,%20quero%20anunciar%20minha%20empresa%20no%20seu%20guia%20comercial%20Encontra%20Paranavaí!%20Como%20funciona?" target="_blank" class="cta-btn">Quero Anunciar Minha Empresa</a>
-        </div>
-
+        
     </div>
-
+    
+        {% include call-to-action.html %}
+    
     <script>
         let allCompanies = [];
         let filteredCompanies = [];
